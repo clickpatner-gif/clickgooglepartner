@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Click Google Partner - 3D Interactive Landing Page</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+  body, html {
+    margin: 0; padding: 0; height: 100%; overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0e9ff 0%, #ffffff 100%);
+    color: #003ea8;
+  }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #0057e7;
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 87, 231, 0.6);
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 24px;
+    cursor: default;
+  }
+  nav a {
+    color: white;
+    margin-left: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+  nav a:hover {
+    color: #ffca28;
+  }
+
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    padding-top: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: #f0f6ff;
+    overflow: hidden;
+  }
+  .hero-text {
+    flex: 1 1 400px;
+    max-width: 600px;
+    padding: 20px 40px;
+    z-index: 10;
+  }
+  .hero-text h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+  .hero-text p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+  .btn-primary {
+    background: #0057e7;
+    color: white;
+    padding: 15px 50px;
+    font-weight: 700;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 87, 231, 0.6);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+  .btn-primary:hover {
+    background-color: #003ea8;
+    box-shadow: 0 10px 25px rgba(0, 62, 168, 0.8);
+    transform: translateY(-3px);
+  }
+
+  /* Three.js Canvas container */
+  #three-container {
+    flex: 1 1 400px;
+    max-width: 500px;
+    height: 450px;
+    margin: 20px;
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0, 87, 231, 0.3);
+    background: white;
+  }
+
+  /* Services Section */
+  section#services {
+    max-width: 1000px;
+    margin: 80px auto 40px auto;
+    padding: 0 20px;
+  }
+  section#services h3 {
+    color: #0057e7;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  .service {
+    background: white;
+    border-radius: 15px;
+    padding: 30px 20px;
+    box-shadow: 0 8px 20px rgba(0, 87, 231, 0.15);
+    color: #0057e7;
+    font-weight: 600;
+    text-align: center;
+    flex: 1 1 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+  .service:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 15px 30px rgba(0, 87, 231, 0.35);
+  }
+
+  /* Contact Section */
+  section#contact {
+    max-width: 600px;
+    margin: 60px auto 100px auto;
+    padding: 0 20px;
+  }
+  section#contact h3 {
+    font-size: 2.25rem;
+    color: #0057e7;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  section#contact p {
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  input, textarea {
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1.8px solid #0057e7;
+    resize: none;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s;
+  }
+  input:focus, textarea:focus {
+    border-color: #ffca28;
+    outline: none;
+  }
+  button[type="submit"] {
+    background: #0057e7;
+    color: white;
+    font-weight: 700;
+    padding: 16px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.15rem;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 87, 231, 0.6);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+  button[type="submit"]:hover {
+    background: #003ea8;
+    box-shadow: 0 10px 25px rgba(0, 62, 168, 0.8);
+    transform: translateY(-3px);
+  }
+
+  /* Footer */
+  footer {
+    background: #003ea8;
+    color: white;
+    text-align: center;
+    padding: 25px 20px;
+    font-weight: 600;
+    margin-top: 80px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero {
+      flex-direction: column;
+      height: auto;
+      padding-top: 100px;
+    }
+    #three-container {
+      max-width: 350px;
+      height: 350px;
+      margin: 30px 0 0 0;
+    }
+    nav a {
+      margin-left: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Click Google Partner</h1>
+  <nav>
+    <a href="#services">Layanan</a>
+    <a href="#contact">Kontak</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h2>Google Partner & Digital Marketing Expert</h2>
+    <p>Meningkatkan brand Anda dengan SEO, Google & Meta Ads, Marketplace, Google Bisnis, Social Media, Fotografi & Videografi profesional.</p>
+    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hubungi Saya</button>
+  </div>
+  <div id="three-container"></div>
+</section>
+
+<section id="services">
+  <h3>Layanan Saya</h3>
+  <div class="services">
+    <div class="service">SEO & Audit Website</div>
+    <div class="service">Google Ads & Meta Ads</div>
+    <div class="service">Marketplace Management</div>
+    <div class="service">Optimasi Google Bisnisku</div>
+    <div class="service">Konten Sosial Media</div>
+    <div class="service">Fotografi & Videografi Komersial</div>
+  </div>
+</section>
+
+<section id="contact">
+  <h3>Kontak & Konsultasi</h3>
+  <p>Siap membantu brand Anda tumbuh lebih cepat & profesional. Hubungi saya untuk konsultasi gratis.</p>
+  <form>
+    <input type="text" placeholder="Nama Anda" required />
+    <input type="email" placeholder="Email Anda" required />
+    <textarea rows="4" placeholder="Pesan / Butuh Konsultasi" required></textarea>
+    <button type="submit">Kirim Pesan</button>
+  </form>
+</section>
+
+<footer>
+  &copy; 2025 Click Google Partner. All rights reserved.
+</footer>
+
+<!-- Three.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+<script>
+  // Setup Three.js scene
+  const container = document.getElementById('three-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  // Create a rotating 3D logo (simple shape)
+  const geometry = new THREE.TorusKnotGeometry(1, 0.4, 100, 16);
+  const material = new THREE.MeshPhysicalMaterial({
+    color: 0x0057e7,
+    metalness: 0.7,
+    roughness: 0.2,
+    clearcoat: 1,
+    clearcoatRoughness: 0.1,
+  });
+  const torusKnot = new THREE.Mesh(geometry, material);
+  scene.add(torusKnot);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5, 5, 5);
+  scene.add(directionalLight);
+
+  // Animate the 3D object rotation
+  function animate() {
+    requestAnimationFrame(animate);
+    torusKnot.rotation.x += 0.007;
+    torusKnot.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Responsive
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+
+  // Particle background effect - create points that float behind hero
+  const particlesCount = 150;
+  const particlesGeometry = new THREE.BufferGeometry();
+  const positions = [];
+  for (let i = 0; i < particlesCount; i++) {
+    positions.push(
+      (Math.random() - 0.5) * 10,
+      (Math.random() - 0.5) * 6,
+      (Math.random() - 0.5) * 10
+    );
+  }
+  particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+
+  const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x0057e7,
+    size: 0.07,
+    opacity: 0.4,
+    transparent: true,
+  });
+  const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+  scene.add(particles);
+
+  // Animate particles movement
+  function animateParticles() {
+    requestAnimationFrame(animateParticles);
+    particles.rotation.y += 0.001;
+  }
+  animateParticles();
+</script>
+
+</body>
+</html>
